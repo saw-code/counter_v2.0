@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,54 +17,67 @@ const GeneralBlock = styled.div`
   border-radius: 10px;
 `
 
-const InsideBlockTopMode = styled.div`
+export const InsideBlockTopMode = styled.div`
   display: grid;
-  grid-template-columns: auto auto; /* 2 колонки */
-  grid-template-rows: auto auto; /* 2 строки */
+  grid-template-columns: auto auto;
   gap: 10px;
-
   margin-left: 23px;
   margin-top: 25px;
   width: 450px;
   height: 120px;
   border: 3px solid #053608;
   border-radius: 10px;
-`
 
-interface GridProps {
-  gridColumn: string;
-  gridRow: string;
-  justifySelf?: string;
+  /* Добавим стили для дочерних элементов */
+
+  > * {
+    align-self: center;
+  }
+
+  > :nth-child(odd) {
+    grid-column: 1; /* Для нечетных элементов - первая колонка */
+    justify-self: start
+  }
+
+  > :nth-child(even) {
+    grid-column: 2; /* Для четных элементов - вторая колонка */
+    justify-self: start
+  }
+`;
+
+type GridProps = {
+  isMax: boolean
+  // isMessage: boolean
+  message: string | null
 }
 
-const SpanValue = styled.span<GridProps>`
-  font-size: 35px;
-  margin-left: 30px;
-  margin-top: 9px;
-  color: deepskyblue;
-  grid-column: ${props => props.gridColumn}; /* колонка */
-  grid-row: ${props => props.gridRow}; /* строка */
-  font-weight: 700;
-`
-const SpanValueShow = styled.span`
+const SpanValueShow = styled.span<GridProps>`
   align-self: center;
+  color: ${props => props.isMax || props.message === 'Incorrect Value' ? 'red' : 'deepskyblue'};
   font-weight: 700;
-  color: deepskyblue;
   display: flex;
   justify-content: center;
   align-content: center;
-  font-size: 50px;
-  margin-top: 27px;
+  margin-top: 40px;
+  font-size: 30px;
+  
 `
 
-const InputValue = styled.input<GridProps>`
-  grid-column: ${props => props.gridColumn}; /* колонка */
-  grid-row: ${props => props.gridRow}; /* строка */
-  justify-self: ${props => props.justifySelf || 'start'}; /* выравнивание по умолчанию */
-  //grid-area: iv;
+export const SpanValue = styled.span`
+  font-size: 35px;
+  margin-left: 30px;
+  color: deepskyblue;
+  font-weight: 700;
+`
+
+type InputType = {
+  message: string | null
+}
+
+export const InputValue = styled.input<InputType>`
+  background-color: ${props => props.message === 'Incorrect Value' ? "#f34949" : ''};
   height: 25px;
   width: 150px;
-  margin-top: 13px;
   margin-right: 10px;
   display: inline-block;
   border: 3px solid #0f9382;
@@ -72,7 +85,7 @@ const InputValue = styled.input<GridProps>`
   text-align: center;
   color: #04173a;
   font-weight: 700;
-`
+`;
 
 const InsideBlockBottom = styled.div`
   display: flex;
@@ -92,13 +105,7 @@ const Button = styled.button`
   width: 70px;
   height: 25px;
   border-radius: 5px;
-  border: 2px solid goldenrod;
   margin: 5px;
-
-  &:hover {
-    color: green;
-    background-color: darkred;
-  }
 `
 
 const InsideBlockShow = styled.div`
@@ -110,7 +117,6 @@ const InsideBlockShow = styled.div`
   border-radius: 10px;
 `
 
-
 export const S = {
   Wrapper,
   GeneralBlock,
@@ -120,5 +126,5 @@ export const S = {
   SpanValue,
   InputValue,
   Button,
-  SpanValueShow
+  SpanValueShow,
 }
