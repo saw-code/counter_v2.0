@@ -1,4 +1,4 @@
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const GeneralBlock = styled.div`
   //align-self: center;
   width: 500px;
   height: 265px;
-  border: 3px solid #053608;
+  border: 5px solid #053608;
   border-radius: 10px;
 `
 
@@ -25,7 +25,7 @@ export const InsideBlockTopMode = styled.div`
   margin-top: 25px;
   width: 450px;
   height: 120px;
-  border: 3px solid #053608;
+  border: 5px solid #053608;
   border-radius: 10px;
 
   /* Добавим стили для дочерних элементов */
@@ -47,7 +47,6 @@ export const InsideBlockTopMode = styled.div`
 
 type GridProps = {
   isMax: boolean
-  // isMessage: boolean
   message: string | null
 }
 
@@ -60,7 +59,6 @@ const SpanValueShow = styled.span<GridProps>`
   align-content: center;
   margin-top: 40px;
   font-size: 30px;
-  
 `
 
 export const SpanValue = styled.span`
@@ -95,7 +93,7 @@ const InsideBlockBottom = styled.div`
   margin-bottom: 25px;
   width: 450px;
   height: 60px;
-  border: 3px solid #053608;
+  border: 5px solid #053608;
   border-radius: 10px;
 `
 
@@ -113,7 +111,7 @@ const InsideBlockShow = styled.div`
   margin-top: 25px;
   width: 450px;
   height: 120px;
-  border: 3px solid #053608;
+  border: 5px solid #053608;
   border-radius: 10px;
 `
 

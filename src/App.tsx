@@ -13,8 +13,6 @@ function App() {
   const [message, setMessage] = useState<string | null>(null)
   const [disabled, setDisabled] = useState(false)
 
-  console.log(message)
-
   useEffect(() => {
     const getStartValue = localStorage.getItem('startValue')
     const getMaxValue = localStorage.getItem('maxValue')
@@ -35,8 +33,12 @@ function App() {
     if (maxValue <= startValue || maxValue < 0 || startValue < 0) {
       setMessage('Incorrect Value');
     } else {
-      setMessage("enter values and press 'set'")
+      setMessage('enter values and press \'set\'')
     }
+
+    setIncrement(0)
+    setDisabled(true)
+    setIsMaxValue(false)
   }, [maxValue, startValue])
 
   const incrementCounter = () => {
@@ -53,7 +55,11 @@ function App() {
     localStorage.setItem('maxValue', JSON.stringify(maxValue))
     resetCounter()
     setMessage(null)
+    setDisabled(false)
   }
+
+  const maxIncrementValue = increment === maxValue // disable inc и set когда инкремент равен мах значению
+  const incorrectValue = startValue >= maxValue || startValue < 0 || maxValue < 0 // disable все кнопки когда некорректный ввод
 
   return (
     <S.Wrapper>
@@ -67,7 +73,8 @@ function App() {
           message={message}
         />
         <S.InsideBlockBottom>
-          <Button lockButton={disabled} name={'SET'} callBack={setCounter}/>
+          <Button lockButton={maxIncrementValue ? maxIncrementValue : incorrectValue || !disabled} name={'SET'}
+                  callBack={setCounter}/>
         </S.InsideBlockBottom>
       </S.GeneralBlock>
       <S.GeneralBlock>
@@ -77,8 +84,9 @@ function App() {
           message={message}
         />
         <S.InsideBlockBottom>
-          <Button lockButton={disabled} name={'INC'} callBack={incrementCounter}/>
-          <Button lockButton={disabled} name={'RESET'} callBack={resetCounter}/>
+          <Button lockButton={maxIncrementValue ? maxIncrementValue : incorrectValue || disabled} name={'INC'}
+                  callBack={incrementCounter}/>
+          <Button lockButton={incorrectValue || disabled} name={'RESET'} callBack={resetCounter}/>
         </S.InsideBlockBottom>
       </S.GeneralBlock>
     </S.Wrapper>
